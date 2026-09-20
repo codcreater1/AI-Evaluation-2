@@ -51,7 +51,10 @@ def test_langfuse_gets_dataset_traces_run_items_and_scores(api, lf):
     assert len(lf.paths("/api/public/dataset-items")) == 4
     links = lf.paths("/api/public/dataset-run-items")
     assert len(links) == 4 and {row["runName"] for row in links} == {"ata-rag #1"}
-    assert len(lf.paths("/api/public/scores")) == 8  # 4 cases x 2 evaluators
+    assert len(lf.events("score-create")) == 8  # 4 cases x 2 evaluators, sent as batches
+    assert not lf.paths("/api/public/scores")  # not one request per score (free-plan rate limit)
+    assert len(lf.events("trace-create")) == 4
+    assert e["langfuse"]["errors"] == 0 and e["langfuse"]["events_sent"] > 0
     assert e["langfuse"]["enabled"] and e["langfuse"]["dataset"] == "ata-rag-golden-v1"
     trace_ids = {row["traceId"] for row in links}
     assert len(trace_ids) == 4
@@ -66,6 +69,9 @@ def test_langfuse_can_be_disabled_or_broken_without_breaking_evaluation(api, lf)
     lf.fail_paths = ("/api/public/v2/datasets",)
     e2 = run(api, execs(3))
     assert "sync_error" in e2["langfuse"] and e2["aggregates"]["exact_match"]["mean_score"] == 1.0
+    lf.fail_paths = ("/api/public/ingestion",)  # partial failure must be visible, not hidden
+    e3 = run(api, execs(3))
+    assert e3["langfuse"]["errors"] >= 1 and "ingestion" in e3["langfuse"]["last_error"]
 
 
 def test_regression_is_detected_and_blocks(api, lf):

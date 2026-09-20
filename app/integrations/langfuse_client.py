@@ -11,7 +11,9 @@ Endpoints used:
 """
 import hashlib
 import os
+import time
 import uuid
+from collections.abc import Callable
 from datetime import UTC, datetime
 from typing import Any
 
@@ -32,6 +34,14 @@ class LangfuseError(RuntimeError):
     pass
 
 
+class LangfuseRateLimited(LangfuseError):
+    """HTTP 429. Langfuse Cloud Hobby allows only ~30 'general API' requests per minute."""
+
+    def __init__(self, message: str, retry_after: float) -> None:
+        super().__init__(message)
+        self.retry_after = retry_after
+
+
 class LangfuseClient:
     def __init__(
         self,
@@ -40,7 +50,11 @@ class LangfuseClient:
         secret_key: str,
         transport: httpx.BaseTransport | None = None,
         timeout: float = 20.0,
+        sleep: Callable[[float], None] = time.sleep,
     ) -> None:
+        self._sleep = sleep
+        self._scores_path: str | None = None  # read endpoint that works (remembered)
+        self.read_cache: dict = {}  # used by the dashboard to avoid burning the rate limit
         self.host = host.rstrip("/")
         self._http = httpx.Client(
             base_url=self.host, auth=(public_key, secret_key), timeout=timeout, transport=transport
@@ -55,11 +69,39 @@ class LangfuseClient:
         return cls(host or "https://cloud.langfuse.com", pk, sk)
 
     # ---- low level
-    def _request(self, method: str, path: str, json: dict | None = None) -> dict:
-        r = self._http.request(method, path, json=json)
-        if r.status_code >= 400:
-            raise LangfuseError(f"{method} {path} -> {r.status_code}: {r.text[:300]}")
-        return r.json() if r.content else {}
+    @staticmethod
+    def _retry_after(r: httpx.Response) -> float:
+        try:
+            return float(r.headers["retry-after"]) + 1
+        except (KeyError, ValueError):
+            pass
+        try:
+            return float(r.json()["details"]["retryAfterSeconds"]) + 1
+        except Exception:  # noqa: BLE001
+            return 6.0
+
+    def _request(self, method: str, path: str, json: dict | None = None,
+                 params: dict | None = None, timeout: float | None = None,
+                 max_retries: int = 3) -> dict:
+        """On HTTP 429 waits for Retry-After and retries (max_retries=0: fail fast, used for reads)."""
+        kwargs = {"timeout": timeout} if timeout else {}
+        attempt = 0
+        while True:
+            try:
+                r = self._http.request(method, path, json=json, params=params, **kwargs)
+            except httpx.HTTPError as exc:
+                raise LangfuseError(f"{method} {path} failed: {exc}") from exc
+            if r.status_code == 429:
+                wait = self._retry_after(r)
+                if attempt >= max_retries or wait > 70:
+                    raise LangfuseRateLimited(
+                        f"Langfuse rate limit reached ({method} {path}); retry in ~{wait:.0f}s", wait)
+                self._sleep(wait)
+                attempt += 1
+                continue
+            if r.status_code >= 400:
+                raise LangfuseError(f"{method} {path} -> {r.status_code}: {r.text[:300]}")
+            return r.json() if r.content else {}
 
     # ---- datasets
     def upsert_dataset(self, name: str, description: str = "", metadata: dict | None = None) -> dict:
@@ -107,27 +149,101 @@ class LangfuseClient:
         return hashlib.sha1("|".join(parts).encode()).hexdigest()
 
     # ---- traces
-    def create_trace(
+    @staticmethod
+    def _event(kind: str, body: dict) -> dict:
+        return {"id": str(uuid.uuid4()), "type": kind, "timestamp": _now(), "body": body}
+
+    def trace_events(
         self, trace_id: str, name: str, input: Any, output: Any, metadata: dict,
         tags: list[str], steps: list[dict] | None = None,
-    ) -> dict:
+    ) -> list[dict]:
         """steps: [{"type": "span"|"generation", "name":.., "input":.., "output":.., ...extra body}]"""
         ts = _now()
-        batch = [{"id": str(uuid.uuid4()), "type": "trace-create", "timestamp": ts,
-                  "body": {"id": trace_id, "name": name, "input": input, "output": output,
-                           "metadata": metadata, "tags": tags, "timestamp": ts}}]
+        events = [self._event("trace-create", {
+            "id": trace_id, "name": name, "input": input, "output": output,
+            "metadata": metadata, "tags": tags, "timestamp": ts})]
         for step in steps or []:
             body = {k: v for k, v in step.items() if k != "type"}
             body.update({"id": str(uuid.uuid4()), "traceId": trace_id, "startTime": ts})
-            batch.append({"id": str(uuid.uuid4()), "type": f"{step['type']}-create",
-                          "timestamp": ts, "body": body})
-        res = self._request("POST", "/api/public/ingestion", {"batch": batch})
-        if res.get("errors"):
-            raise LangfuseError(f"ingestion errors: {res['errors'][:2]}")
-        return res
+            events.append(self._event(f"{step['type']}-create", body))
+        return events
+
+    def score_event(self, trace_id: str, name: str, value: float | str, comment: str = "",
+                    metadata: dict | None = None, score_id: str | None = None) -> dict:
+        return self._event("score-create", {
+            "id": score_id or str(uuid.uuid4()), "traceId": trace_id, "name": name, "value": value,
+            "dataType": "CATEGORICAL" if isinstance(value, str) else "NUMERIC",
+            "comment": _clip(comment, 500), "metadata": metadata or {}})
+
+    def ingest(self, events: list[dict], chunk: int = 50) -> int:
+        """Sends events in batches. Ingestion has a much higher rate limit than the 'general' API
+        (1000 batches/min), so traces AND scores go through here."""
+        errors: list = []
+        for i in range(0, len(events), chunk):
+            res = self._request("POST", "/api/public/ingestion", {"batch": events[i:i + chunk]})
+            errors += res.get("errors") or []
+        if errors:
+            raise LangfuseError(f"{len(errors)} ingestion event(s) rejected, e.g. {errors[0]}")
+        return len(events)
+
+    def create_trace(
+        self, trace_id: str, name: str, input: Any, output: Any, metadata: dict,
+        tags: list[str], steps: list[dict] | None = None,
+    ) -> int:
+        return self.ingest(self.trace_events(trace_id, name, input, output, metadata, tags, steps))
 
     def get_trace(self, trace_id: str) -> dict:
         return self._request("GET", f"/api/public/traces/{trace_id}")
+
+    # ---- reads (used by the dashboard). Langfuse changed its read APIs (scores v3 on the new
+    # platform, v2/legacy on older ones), so we try the newest first and fall back.
+    def project_name(self) -> str:
+        data = self._request("GET", "/api/public/projects", timeout=8, max_retries=0).get("data") or []
+        return data[0].get("name", "?") if data else "?"
+
+    def list_scores(self, limit: int = 20, trace_ids: list[str] | None = None) -> list[dict]:
+        paths = ["/api/public/v3/scores", "/api/public/v2/scores", "/api/public/scores"]
+        if self._scores_path in paths:
+            paths.remove(self._scores_path)
+            paths.insert(0, self._scores_path)
+        last: LangfuseError | None = None
+        for path in paths:
+            params: dict[str, Any] = {"limit": limit}
+            if trace_ids:
+                params["traceId"] = ",".join(trace_ids)
+            if path.endswith("/v3/scores"):
+                params["fields"] = "details,subject"
+            try:
+                rows = self._request("GET", path, params=params, timeout=8,
+                                     max_retries=0).get("data") or []
+            except LangfuseRateLimited:
+                raise  # other endpoints share the same bucket, do not waste more requests
+            except LangfuseError as exc:
+                last = exc
+                continue
+            self._scores_path = path
+            out = []
+            for r in rows:
+                subj = r.get("subject") or {}
+                trace_id = (r.get("traceId") or subj.get("traceId") or subj.get("trace_id")
+                            or (subj.get("id") if subj.get("kind") == "trace" else None))
+                out.append({"name": r.get("name"), "value": r.get("value"),
+                            "data_type": r.get("dataType"), "trace_id": trace_id,
+                            "timestamp": r.get("timestamp") or r.get("createdAt")})
+            return out
+        raise last or LangfuseError("could not read scores")
+
+    def list_datasets(self) -> list[dict]:
+        last: LangfuseError | None = None
+        for path in ("/api/public/v2/datasets", "/api/public/datasets"):
+            try:
+                return self._request("GET", path, params={"limit": 50}, timeout=8,
+                                     max_retries=0).get("data") or []
+            except LangfuseRateLimited:
+                raise
+            except LangfuseError as exc:
+                last = exc
+        raise last or LangfuseError("could not read datasets")
 
     def trace_url(self, trace_id: str) -> str:
         return f"{self.host}/trace/{trace_id}"

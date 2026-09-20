@@ -1,6 +1,11 @@
 """ScoreSink implementation for Langfuse. The runner only knows the sink protocol
-(on_execution / on_result / flush); everything Langfuse-specific lives here."""
+(on_execution / on_result / flush); everything Langfuse-specific lives here.
+
+Rate limits: Langfuse Cloud Hobby allows ~30 'general API' requests/min, but ingestion is far
+higher. So traces and scores are BUFFERED and sent as ingestion batches on flush(); only the
+dataset-run link (one small request per case) uses the general API."""
 import logging
+import threading
 import uuid
 from typing import Protocol
 
@@ -24,7 +29,8 @@ class ScoreSink(Protocol):
 class LangfuseSink:
     """- ensures every executed case has a Langfuse trace (creates one when the AI system did not),
     - links the trace to its dataset item inside a named experiment run (if dataset_ref is given),
-    - writes each evaluator result as a score on the trace (numeric or categorical)."""
+    - writes each evaluator result as a score on the trace (numeric or categorical).
+    Errors never stop the evaluation; they are counted (error_count / last_error)."""
 
     def __init__(
         self,
@@ -39,9 +45,24 @@ class LangfuseSink:
         self.dataset_ref = dataset_ref
         self.metadata = metadata or {}
         self.description = description
+        self.error_count = 0
+        self.last_error: str | None = None
+        self.events_sent = 0
+        self._buffer: list[dict] = []
+        self._lock = threading.Lock()
 
     def item_id(self, case_id: str) -> str:
         return f"{self.dataset_ref}:{case_id}"
+
+    def _fail(self, what: str, exc: Exception) -> None:
+        with self._lock:
+            self.error_count += 1
+            self.last_error = f"{what}: {exc}"[:300]
+        log.warning("langfuse %s failed: %s", what, exc)
+
+    def _add(self, events: list[dict]) -> None:
+        with self._lock:
+            self._buffer.extend(events)
 
     def on_execution(self, run_id: str, case: EvaluationCase, execution: ExecutionResult) -> None:
         if not execution.trace_id:
@@ -58,17 +79,20 @@ class LangfuseSink:
                                  "output": execution.output_tokens or 0},
                 **({"costDetails": {"total": execution.cost_usd}} if execution.cost_usd else {}),
             })
-            self.client.create_trace(
+            self._add(self.client.trace_events(
                 execution.trace_id, f"{case.system}:{case.id}", case.input, execution.output,
                 {**self.metadata, "case_id": case.id, "run_id": run_id,
                  "latency_ms": execution.latency_ms},
-                [case.system, *( [self.run_name] if self.run_name else [] )], steps,
-            )
+                [case.system, *([self.run_name] if self.run_name else [])], steps,
+            ))
         if self.dataset_ref and self.run_name:
-            self.client.link_run_item(
-                self.run_name, self.item_id(case.id), execution.trace_id,
-                {"case_id": case.id, **self.metadata}, self.description,
-            )
+            try:
+                self.client.link_run_item(
+                    self.run_name, self.item_id(case.id), execution.trace_id,
+                    {"case_id": case.id, **self.metadata}, self.description,
+                )
+            except Exception as exc:  # noqa: BLE001
+                self._fail(f"link run item {case.id}", exc)
 
     def on_result(self, run_id, case, execution, result: EvaluationResult) -> None:
         if execution is None or not execution.trace_id:
@@ -79,15 +103,22 @@ class LangfuseSink:
             value = result.label  # categorical, e.g. TP / FN / error
         else:
             return
-        self.client.create_score(
+        self._add([self.client.score_event(
             execution.trace_id, result.evaluator, value, result.reason,
             {"run_id": run_id, "case_id": case.id, "passed": result.passed,
              "evaluator_version": result.evaluator_version, **result.metadata},
             score_id=self.client.score_id(run_id, execution.trace_id, result.evaluator),
-        )
+        )])
 
-    def flush(self) -> None:  # REST calls are synchronous, nothing buffered
-        return None
+    def flush(self) -> None:
+        with self._lock:
+            events, self._buffer = self._buffer, []
+        if not events:
+            return
+        try:
+            self.events_sent += self.client.ingest(events)
+        except Exception as exc:  # noqa: BLE001
+            self._fail(f"ingestion of {len(events)} events", exc)
 
 
 def default_sinks() -> list[ScoreSink]:

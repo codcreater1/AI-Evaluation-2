@@ -4,7 +4,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 import app.evaluators
-from app.api.routes import datasets, evaluations, experiments, metrics, systems
+from app.api.routes import dashboard, datasets, evaluations, experiments, metrics, systems
 from app.db import models  # noqa: F401
 from app.db.models import ImmutableDatasetError
 from app.db.session import Base, engine
@@ -23,6 +23,7 @@ app.include_router(systems.router)
 app.include_router(metrics.router)
 app.include_router(datasets.router)
 app.include_router(experiments.router)
+app.include_router(dashboard.router)
 
 
 @app.exception_handler(DomainError)

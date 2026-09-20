@@ -149,3 +149,34 @@ FAIL: AI Evaluation failed
   [FAIL ] answer_correctness: 92.4% -> 86.7% (-5.7 pts), max allowed drop 2.0 pts
 Deployment should be blocked.
 ```
+
+---
+
+# Dashboard (localhost)
+
+`uvicorn app.api.main:app` sonrası tarayıcıda **http://localhost:8000** açılır.
+
+- **System overview:** her sistemin son experiment'i, skorlar vs eşik (yeşil/kırmızı), gate PASS/FAIL
+- **Experiment history:** run adı, sistem, dataset versiyonu, model, prompt, case sayısı, pass rate'ler, baseline (★)
+- **Experiment sayfası:** skorlar, latency/cost/token, baseline ile karşılaştırma, gate kontrolleri,
+  başarısız case'ler ve her biri için **"Open in Langfuse"** trace linki
+- **Langfuse bölümü:** Langfuse'tan canlı okunan bağlantı durumu, son skorlar ve dataset listesi
+- **"Run test scenario" butonu:** demo dataset + 3 experiment (baseline, zararsız değişiklik, bozuk değişiklik) oluşturur
+  ve Langfuse ayarlıysa hepsini oraya gönderir. Sunum / test için tek tıkla veri üretir.
+
+Langfuse okuma API'leri sürümler arasında değişti (yeni platformda skorlar için `v3/scores`); istemci önce yenisini
+dener, olmazsa eskisine düşer. Okuma başarısız olursa panel geri kalanı çalışmaya devam eder, hata mesajını gösterir.
+Yeni gönderilen verinin Langfuse'ta görünmesi birkaç dakika sürebilir.
+
+## Langfuse Cloud limitleri (önemli)
+- **Ücretsiz (Hobby) plan:** "genel API" dakikada ~30 istek. Skorları tek tek `POST /api/public/scores` ile göndermek bu
+  limiti aşıyordu (ilk ~30 skordan sonrası düşüyordu). Şimdi **trace'ler ve skorlar toplu (ingestion batch)** gönderilir;
+  yalnız dataset-run bağlantısı (case başına 1 küçük istek) genel API'yi kullanır.
+- **429 (rate limit):** istemci `Retry-After` kadar bekleyip yeniden dener. Panel okumaları beklemez, önbelleğe alınır ve
+  anlaşılır bir mesaj gösterir.
+- **Hatalar gizlenmez:** Langfuse'a gönderirken hata olursa experiment kaydında `langfuse.errors` / `last_error`
+  tutulur, panelde kırmızı uyarı çıkar.
+- Test senaryosu bilerek küçük (6 case) tutuldu; iki kez üst üste çalıştırmadan önce ~1 dakika bekleyin.
+- **Trace gecikmesi:** Langfuse v4'te bu yolla gönderilen trace'ler arayüzde birkaç dakika (en fazla ~15 dk) gecikmeli görünebilir.
+- **Bilinen risk:** Langfuse, eski *trace/observation ingestion API*'sini **16 Kasım 2026'da Cloud'da kapatacak**
+  (skor eventleri devam ediyor). Bugün çalışıyor; kalıcı çözüm trace'leri OpenTelemetry (OTLP) endpoint'ine taşımak.

@@ -121,6 +121,11 @@ def run_experiment(
         {**gates.minimum, **config.thresholds}, config.classification,
     )
     report = runner.run(cases, executions, system=config.system, dataset=ref)
+    for sink in sinks:  # surface Langfuse problems instead of hiding them
+        lf["events_sent"] = sink.events_sent
+        lf["errors"] = sink.error_count
+        if sink.last_error:
+            lf["last_error"] = sink.last_error
     run = persist_report(db, report, config, meta)
 
     agg = {k: v.model_dump() for k, v in report.aggregates.items()}

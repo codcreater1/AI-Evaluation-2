@@ -62,6 +62,14 @@ class LangfuseRecorder:
         self.requests.append((request.method, request.url.path, body))
         if any(p in request.url.path for p in self.fail_paths):
             return httpx.Response(500, text="boom")
+        if request.method == "GET" and request.url.path == "/api/public/projects":
+            return httpx.Response(200, json={"data": [{"name": "fake-project"}]})
+        if request.method == "GET" and request.url.path == "/api/public/v3/scores":
+            return httpx.Response(200, json={"data": [
+                {"name": "exact_match", "value": 0.7, "dataType": "NUMERIC", "timestamp": "2026-09-20T18:00:00Z",
+                 "subject": {"kind": "trace", "traceId": "trace-from-langfuse"}}]})
+        if request.method == "GET" and request.url.path == "/api/public/v2/datasets":
+            return httpx.Response(200, json={"data": [{"name": "ata-rag-golden-v1"}]})
         if request.url.path.startswith("/api/public/traces/"):
             return httpx.Response(200, json={"id": "t-prod", "input": {"question": "Q from prod?"}})
         if request.url.path == "/api/public/ingestion":
@@ -70,6 +78,11 @@ class LangfuseRecorder:
 
     def paths(self, path: str) -> list[dict]:
         return [b for _, p, b in self.requests if p == path]
+
+    def events(self, kind: str) -> list[dict]:
+        """Bodies of ingestion events of one type (trace-create, score-create, ...)."""
+        return [e["body"] for b in self.paths("/api/public/ingestion") for e in b["batch"]
+                if e["type"] == kind]
 
 
 @pytest.fixture
