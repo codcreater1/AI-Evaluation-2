@@ -1,0 +1,32 @@
+[project]
+name = "ai-eval-core"
+version = "0.1.0"
+description = "Core evaluation engine of the AI Evaluation Platform"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.110",
+  "uvicorn[standard]>=0.29",
+  "pydantic>=2.6",
+  "sqlalchemy>=2.0",
+  "psycopg[binary]>=3.1",
+  "httpx>=0.27",
+  "jsonschema>=4.21",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.4"]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501", "B008"]
