@@ -1,0 +1,23 @@
+system: internship-coordinator
+dataset: internship-golden-v1
+evaluators:
+  - name: required_fields
+    params: {fields: [decision, explanation]}
+  - name: exact_match
+    params: {output_key: decision}
+  - name: json_schema
+    params:
+      schema:
+        type: object
+        required: [decision, explanation]
+        properties:
+          decision: {enum: [eligible, not_eligible, needs_review]}
+  - decision_correctness
+  - explanation_quality
+  - hallucination_detection
+thresholds:
+  decision_correctness: 0.90
+classification:
+  expected_key: decision
+  output_key: decision
+  positive_label: eligible
