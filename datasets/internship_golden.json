@@ -1,0 +1,1832 @@
+[
+  {
+    "id": "ic-001",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-clean-04",
+      "counted_working_days": 30,
+      "total_hours": 330,
+      "evaluation_score": 84,
+      "report_word_count": 603,
+      "max_similarity": 0.1825,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 30 verified working days (>= 20 required), employer evaluation 84/100 (>= 60 required), report 603 words (>= 500 required), similarity 18% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "clean",
+      "source_note": "live_system_observed",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-002",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-clean-03",
+      "counted_working_days": 20,
+      "total_hours": 160,
+      "evaluation_score": 84,
+      "report_word_count": 599,
+      "max_similarity": 0.1756,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 20 verified working days (>= 20 required), employer evaluation 84/100 (>= 60 required), report 599 words (>= 500 required), similarity 18% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "clean",
+      "source_note": "live_system_observed",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-003",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-clean-02",
+      "counted_working_days": 25,
+      "total_hours": 187.5,
+      "evaluation_score": 84,
+      "report_word_count": 588,
+      "max_similarity": 0.2311,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 25 verified working days (>= 20 required), employer evaluation 84/100 (>= 60 required), report 588 words (>= 500 required), similarity 23% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "clean",
+      "source_note": "live_system_observed",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-004",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-clean-01",
+      "counted_working_days": 30,
+      "total_hours": 240,
+      "evaluation_score": 84,
+      "report_word_count": 559,
+      "max_similarity": 0.1896,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 30 verified working days (>= 20 required), employer evaluation 84/100 (>= 60 required), report 559 words (>= 500 required), similarity 19% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "clean",
+      "source_note": "live_system_observed",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-005",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-clean-06",
+      "counted_working_days": 30,
+      "total_hours": 240,
+      "evaluation_score": 61,
+      "report_word_count": 555,
+      "max_similarity": 0.2079,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 30 verified working days (>= 20 required), employer evaluation 61/100 (>= 60 required), report 555 words (>= 500 required), similarity 21% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "clean",
+      "source_note": "live_system_observed",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-006",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-clean-05",
+      "counted_working_days": 30,
+      "total_hours": 120,
+      "evaluation_score": 84,
+      "report_word_count": 534,
+      "max_similarity": 0.2642,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 30 verified working days (>= 20 required), employer evaluation 84/100 (>= 60 required), report 534 words (>= 500 required), similarity 26% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "clean",
+      "source_note": "live_system_observed",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-007",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "scenario-clean",
+      "counted_working_days": 30,
+      "total_hours": 240,
+      "evaluation_score": 84,
+      "report_word_count": 631,
+      "max_similarity": 0,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-03",
+      "end_date": "2026-09-11"
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 30 verified working days (>= 20 required), employer evaluation 84/100 (>= 60 required), report 631 words (>= 500 required), similarity 0% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "clean",
+      "source_note": "live_system_observed",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-008",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-copied-05",
+      "counted_working_days": 30,
+      "total_hours": 240,
+      "evaluation_score": 84,
+      "report_word_count": 559,
+      "max_similarity": 0.9965,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "not_eligible",
+      "explanation": "Rejected: the report is 100% similar to a previously accepted submission (>= 80% reject threshold), so it cannot be approved automatically.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-copied",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "REPORT_NOT_ORIGINAL"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-009",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-future-dates-04",
+      "counted_working_days": 21,
+      "total_hours": 168,
+      "evaluation_score": 84,
+      "report_word_count": 631,
+      "max_similarity": 1.0,
+      "attachment_count": 3,
+      "has_future_dates": true,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-21",
+      "end_date": "2026-09-21"
+    },
+    "expected_output": {
+      "decision": "not_eligible",
+      "explanation": "Rejected: the report is 100% similar to a previously accepted submission (>= 80% reject threshold), so it cannot be approved automatically; the attendance record claims days that have not happened yet.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-future-dates",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "FUTURE_DATES",
+        "TOTAL_DAYS_MISMATCH",
+        "REPORT_NOT_ORIGINAL"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-010",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-future-dates-01",
+      "counted_working_days": 4,
+      "total_hours": 32,
+      "evaluation_score": 84,
+      "report_word_count": 631,
+      "max_similarity": 1.0,
+      "attachment_count": 3,
+      "has_future_dates": true,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-09-15",
+      "end_date": "2026-10-30"
+    },
+    "expected_output": {
+      "decision": "not_eligible",
+      "explanation": "Rejected: the report is 100% similar to a previously accepted submission (>= 80% reject threshold), so it cannot be approved automatically; only 4 verified working day(s) were found; 20 are required; the attendance record claims days that have not happened yet.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-future-dates",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "FUTURE_DATES",
+        "DAYS_SHORT",
+        "TOTAL_DAYS_MISMATCH",
+        "REPORT_NOT_ORIGINAL"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-011",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-weekend-pad-04",
+      "counted_working_days": 15,
+      "total_hours": 120,
+      "evaluation_score": 84,
+      "report_word_count": 631,
+      "max_similarity": 1.0,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "not_eligible",
+      "explanation": "Rejected: the report is 100% similar to a previously accepted submission (>= 80% reject threshold), so it cannot be approved automatically; only 15 verified working day(s) were found; 20 are required; some claimed working days fall on weekends.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-weekend-pad",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "DAYS_SHORT",
+        "WEEKEND_DAYS",
+        "TOTAL_DAYS_MISMATCH",
+        "REPORT_NOT_ORIGINAL"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-012",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-unsigned-04",
+      "counted_working_days": 30,
+      "total_hours": 240,
+      "evaluation_score": 84,
+      "report_word_count": 631,
+      "max_similarity": 1.0,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": false,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "not_eligible",
+      "explanation": "Rejected: the report is 100% similar to a previously accepted submission (>= 80% reject threshold), so it cannot be approved automatically; the employer evaluation form is not signed.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-unsigned",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "EVAL_UNSIGNED",
+        "REPORT_NOT_ORIGINAL"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-013",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-name-mismatch-02",
+      "counted_working_days": 30,
+      "total_hours": 240,
+      "evaluation_score": 84,
+      "report_word_count": 631,
+      "max_similarity": 1.0,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": true,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "not_eligible",
+      "explanation": "Rejected: the report is 100% similar to a previously accepted submission (>= 80% reject threshold), so it cannot be approved automatically; the student name does not match across the submitted documents.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-name-mismatch",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "NAME_MISMATCH",
+        "REPORT_NOT_ORIGINAL"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-014",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-short-days-05",
+      "counted_working_days": 17,
+      "total_hours": 136,
+      "evaluation_score": 84,
+      "report_word_count": 631,
+      "max_similarity": 1.0,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "not_eligible",
+      "explanation": "Rejected: the report is 100% similar to a previously accepted submission (>= 80% reject threshold), so it cannot be approved automatically; only 17 verified working day(s) were found; 20 are required.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-short-days",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "DAYS_SHORT",
+        "REPORT_NOT_ORIGINAL"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-015",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-scan-05",
+      "counted_working_days": 0,
+      "total_hours": 0,
+      "evaluation_score": null,
+      "report_word_count": 0,
+      "max_similarity": 0,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": true,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": null,
+      "end_date": null
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: only 0 verified working day(s) were found; 20 are required; the report is 0 words; 500 are required; required attachments are missing or unreadable (need 3).",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-scan",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "DAYS_SHORT",
+        "DOCUMENT_MISSING",
+        "REPORT_SHORT"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-016",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-future-dates-02",
+      "counted_working_days": 8,
+      "total_hours": 64,
+      "evaluation_score": 84,
+      "report_word_count": 533,
+      "max_similarity": 0.2106,
+      "attachment_count": 3,
+      "has_future_dates": true,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-09-10",
+      "end_date": "2026-09-30"
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: only 8 verified working day(s) were found; 20 are required; the attendance record claims days that have not happened yet.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-future-dates",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "FUTURE_DATES",
+        "DAYS_SHORT",
+        "TOTAL_DAYS_MISMATCH"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-017",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-weekend-pad-04",
+      "counted_working_days": 15,
+      "total_hours": 120,
+      "evaluation_score": 84,
+      "report_word_count": 533,
+      "max_similarity": 0.2108,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: only 15 verified working day(s) were found; 20 are required; some claimed working days fall on weekends.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-weekend-pad",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "DAYS_SHORT",
+        "WEEKEND_DAYS",
+        "TOTAL_DAYS_MISMATCH"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-018",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-thin-report-06",
+      "counted_working_days": 30,
+      "total_hours": 240,
+      "evaluation_score": 84,
+      "report_word_count": 41,
+      "max_similarity": 0.129,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: the report is 41 words; 500 are required.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-thin-report",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "REPORT_SHORT"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-019",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-unsigned-04",
+      "counted_working_days": 30,
+      "total_hours": 240,
+      "evaluation_score": 84,
+      "report_word_count": 533,
+      "max_similarity": 0.2108,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": false,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: the employer evaluation form is not signed.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-unsigned",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "EVAL_UNSIGNED"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-020",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-name-mismatch-05",
+      "counted_working_days": 30,
+      "total_hours": 240,
+      "evaluation_score": 84,
+      "report_word_count": 533,
+      "max_similarity": 0.211,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": true,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: the student name does not match across the submitted documents.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-name-mismatch",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "NAME_MISMATCH"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-021",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-short-days-03",
+      "counted_working_days": 10,
+      "total_hours": 80,
+      "evaluation_score": 84,
+      "report_word_count": 533,
+      "max_similarity": 0.2129,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: only 10 verified working day(s) were found; 20 are required.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-short-days",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "DAYS_SHORT"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-022",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-scan-04",
+      "counted_working_days": 0,
+      "total_hours": 0,
+      "evaluation_score": null,
+      "report_word_count": 0,
+      "max_similarity": 0,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": true,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": null,
+      "end_date": null
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: only 0 verified working day(s) were found; 20 are required; the report is 0 words; 500 are required; required attachments are missing or unreadable (need 3).",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-scan",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "DAYS_SHORT",
+        "DOCUMENT_MISSING",
+        "REPORT_SHORT"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-023",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-thin-report-01",
+      "counted_working_days": 30,
+      "total_hours": 240,
+      "evaluation_score": 84,
+      "report_word_count": 62,
+      "max_similarity": 0.1286,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: the report is 62 words; 500 are required.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-thin-report",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "REPORT_SHORT"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-024",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-unsigned-03",
+      "counted_working_days": 30,
+      "total_hours": 240,
+      "evaluation_score": 84,
+      "report_word_count": 533,
+      "max_similarity": 0.2108,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": false,
+      "evaluation_form_stamped": false,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: the employer evaluation form is not signed; the employer evaluation form is not stamped.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-unsigned",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "EVAL_UNSIGNED",
+        "EVAL_UNSTAMPED"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-025",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-short-days-06",
+      "counted_working_days": 19,
+      "total_hours": 152,
+      "evaluation_score": 84,
+      "report_word_count": 533,
+      "max_similarity": 0.2129,
+      "attachment_count": 3,
+      "has_future_dates": false,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-08-10",
+      "end_date": "2026-09-18"
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: only 19 verified working day(s) were found; 20 are required.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-short-days",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "DAYS_SHORT"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-026",
+    "system": "internship-coordinator",
+    "input": {
+      "application_id": "ic-future-dates-05",
+      "counted_working_days": 2,
+      "total_hours": 16,
+      "evaluation_score": 84,
+      "report_word_count": 0,
+      "max_similarity": 0,
+      "attachment_count": 3,
+      "has_future_dates": true,
+      "documents_unreadable": false,
+      "evaluation_form_signed": true,
+      "evaluation_form_stamped": true,
+      "name_mismatch": false,
+      "start_date": "2026-09-18",
+      "end_date": "2026-12-19"
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: only 2 verified working day(s) were found; 20 are required; the report is 0 words; 500 are required; the attendance record claims days that have not happened yet.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "ic-future-dates",
+      "source_note": "live_system_observed",
+      "finding_codes": [
+        "FUTURE_DATES",
+        "DAYS_SHORT",
+        "TOTAL_DAYS_MISMATCH",
+        "REPORT_SHORT"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-027",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 20,
+      "total_hours": 160,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "application_id": "boundary-boundary_days_exact_min",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Nova Logistics Software Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 20 verified working days (>= 20 required), employer evaluation 75/100 (>= 60 required), report 520 words (>= 500 required), similarity 15% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "boundary_days_exact_min",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-028",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 19,
+      "total_hours": 152,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "application_id": "boundary-boundary_days_one_under",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Harbor Analytics S.A."
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: only 19 verified working day(s) were found; 20 are required.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "boundary_days_one_under",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "DAYS_SHORT"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-029",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 60,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "application_id": "boundary-boundary_score_exact_min",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Baltic Freight Systems Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 25 verified working days (>= 20 required), employer evaluation 60/100 (>= 60 required), report 520 words (>= 500 required), similarity 15% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "boundary_score_exact_min",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-030",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 59,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "application_id": "boundary-boundary_score_one_under",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Northgate Manufacturing S.A."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 25 verified working days (>= 20 required), employer evaluation 59/100 (>= 60 required), report 520 words (>= 500 required), similarity 15% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "boundary_score_one_under",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-031",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 500,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "application_id": "boundary-boundary_words_exact_min",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Vistula Data Systems Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 25 verified working days (>= 20 required), employer evaluation 75/100 (>= 60 required), report 500 words (>= 500 required), similarity 15% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "boundary_words_exact_min",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-032",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 499,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "application_id": "boundary-boundary_words_one_under",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Amber Coast Consulting Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: the report is 499 words; 500 are required.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "boundary_words_one_under",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "REPORT_SHORT"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-033",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.79,
+      "attachment_count": 3,
+      "application_id": "boundary-boundary_similarity_just_below_reject",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Nova Logistics Software Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 25 verified working days (>= 20 required), employer evaluation 75/100 (>= 60 required), report 520 words (>= 500 required), similarity 79% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "boundary_similarity_just_below_reject",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-034",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.8,
+      "attachment_count": 3,
+      "application_id": "boundary-boundary_similarity_exact_reject",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Harbor Analytics S.A."
+    },
+    "expected_output": {
+      "decision": "not_eligible",
+      "explanation": "Rejected: the report is 80% similar to a previously accepted submission (>= 80% reject threshold), so it cannot be approved automatically.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "boundary_similarity_exact_reject",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "REPORT_NOT_ORIGINAL"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-035",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.65,
+      "attachment_count": 3,
+      "application_id": "boundary-boundary_similarity_warn_zone",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Baltic Freight Systems Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 25 verified working days (>= 20 required), employer evaluation 75/100 (>= 60 required), report 520 words (>= 500 required), similarity 65% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "boundary_similarity_warn_zone",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-036",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 2,
+      "application_id": "boundary-missing_one_attachment",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Northgate Manufacturing S.A."
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: required attachments are missing or unreadable (need 3).",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "missing_one_attachment",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "DOCUMENT_MISSING"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-037",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "evaluation_form_signed": false,
+      "application_id": "boundary-evaluation_form_unsigned_only",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Vistula Data Systems Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: the employer evaluation form is not signed.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "evaluation_form_unsigned_only",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "EVAL_UNSIGNED"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-038",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "evaluation_form_stamped": false,
+      "application_id": "boundary-evaluation_form_unstamped_only",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Amber Coast Consulting Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: the employer evaluation form is not stamped.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "evaluation_form_unstamped_only",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "EVAL_UNSTAMPED"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-039",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "name_mismatch": true,
+      "application_id": "boundary-name_mismatch_only",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Nova Logistics Software Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: the student name does not match across the submitted documents.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "name_mismatch_only",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "NAME_MISMATCH"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-040",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "has_future_dates": true,
+      "application_id": "boundary-future_dates_only",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Harbor Analytics S.A."
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: the attendance record claims days that have not happened yet.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "future_dates_only",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "FUTURE_DATES"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-041",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "application_id": "boundary-weekend_padding_alone_does_not_block",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Baltic Freight Systems Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 25 verified working days (>= 20 required), employer evaluation 75/100 (>= 60 required), report 520 words (>= 500 required), similarity 15% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "weekend_padding_alone_does_not_block",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "WEEKEND_DAYS"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-042",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 15,
+      "total_hours": 100,
+      "evaluation_score": 50,
+      "report_word_count": 300,
+      "max_similarity": 0.2,
+      "attachment_count": 3,
+      "application_id": "boundary-multiple_independent_issues",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Northgate Manufacturing S.A."
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: only 15 verified working day(s) were found; 20 are required; the report is 300 words; 500 are required.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "multiple_independent_issues",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "DAYS_SHORT",
+        "REPORT_SHORT"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-043",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 20,
+      "total_hours": 160,
+      "evaluation_score": 90,
+      "report_word_count": 650,
+      "max_similarity": 0.05,
+      "attachment_count": 3,
+      "application_id": "boundary-clean_short_internship",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Vistula Data Systems Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 20 verified working days (>= 20 required), employer evaluation 90/100 (>= 60 required), report 650 words (>= 500 required), similarity 5% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "clean_short_internship",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-044",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 60,
+      "total_hours": 480,
+      "evaluation_score": 98,
+      "report_word_count": 1200,
+      "max_similarity": 0.02,
+      "attachment_count": 3,
+      "application_id": "boundary-clean_long_internship_high_score",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Amber Coast Consulting Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 60 verified working days (>= 20 required), employer evaluation 98/100 (>= 60 required), report 1200 words (>= 500 required), similarity 2% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "clean_long_internship_high_score",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-045",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 10,
+      "total_hours": 80,
+      "evaluation_score": 70,
+      "report_word_count": 520,
+      "max_similarity": 0.95,
+      "attachment_count": 3,
+      "application_id": "boundary-reject_and_clarify_together",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Nova Logistics Software Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "not_eligible",
+      "explanation": "Rejected: the report is 95% similar to a previously accepted submission (>= 80% reject threshold), so it cannot be approved automatically; only 10 verified working day(s) were found; 20 are required.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "reject_and_clarify_together",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "DAYS_SHORT",
+        "REPORT_NOT_ORIGINAL"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-046",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 45,
+      "report_word_count": 520,
+      "max_similarity": 0.1,
+      "attachment_count": 3,
+      "application_id": "boundary-low_score_clean_otherwise",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Harbor Analytics S.A."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 25 verified working days (>= 20 required), employer evaluation 45/100 (>= 60 required), report 520 words (>= 500 required), similarity 10% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "low_score_clean_otherwise",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-047",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 30,
+      "report_word_count": 520,
+      "max_similarity": 0.1,
+      "attachment_count": 3,
+      "application_id": "boundary-low_score_alone_is_not_a_finding",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Baltic Freight Systems Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 25 verified working days (>= 20 required), employer evaluation 30/100 (>= 60 required), report 520 words (>= 500 required), similarity 10% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "low_score_alone_is_not_a_finding",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-048",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 21,
+      "total_hours": 170,
+      "evaluation_score": 88,
+      "report_word_count": 700,
+      "max_similarity": 0.08,
+      "attachment_count": 3,
+      "application_id": "boundary-very_short_internship_well_documented",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Northgate Manufacturing S.A."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 21 verified working days (>= 20 required), employer evaluation 88/100 (>= 60 required), report 700 words (>= 500 required), similarity 8% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "very_short_internship_well_documented",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-049",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.61,
+      "attachment_count": 3,
+      "application_id": "boundary-borderline_similarity_just_above_warn",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Vistula Data Systems Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "eligible",
+      "explanation": "All automated checks passed: 25 verified working days (>= 20 required), employer evaluation 75/100 (>= 60 required), report 520 words (>= 500 required), similarity 61% (< 80% reject threshold). Ready to sign.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "borderline_similarity_just_above_warn",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-050",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 0,
+      "application_id": "boundary-all_documents_missing",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Amber Coast Consulting Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: required attachments are missing or unreadable (need 3).",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "all_documents_missing",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "DOCUMENT_MISSING"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-051",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 12,
+      "total_hours": 90,
+      "evaluation_score": 80,
+      "report_word_count": 200,
+      "max_similarity": 0.1,
+      "attachment_count": 3,
+      "application_id": "boundary-thin_report_and_low_days_combo",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Nova Logistics Software Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: only 12 verified working day(s) were found; 20 are required; the report is 200 words; 500 are required.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "thin_report_and_low_days_combo",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "DAYS_SHORT",
+        "REPORT_SHORT"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-052",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 30,
+      "total_hours": 240,
+      "evaluation_score": 100,
+      "report_word_count": 900,
+      "max_similarity": 0.99,
+      "attachment_count": 3,
+      "application_id": "boundary-perfect_score_but_copied_report",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Harbor Analytics S.A."
+    },
+    "expected_output": {
+      "decision": "not_eligible",
+      "explanation": "Rejected: the report is 99% similar to a previously accepted submission (>= 80% reject threshold), so it cannot be approved automatically.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "perfect_score_but_copied_report",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "REPORT_NOT_ORIGINAL"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-053",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "name_mismatch": true,
+      "has_future_dates": true,
+      "application_id": "boundary-name_and_future_dates_combo",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Baltic Freight Systems Sp. z o.o."
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: the attendance record claims days that have not happened yet; the student name does not match across the submitted documents.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "name_and_future_dates_combo",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "FUTURE_DATES",
+        "NAME_MISMATCH"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  },
+  {
+    "id": "ic-054",
+    "system": "internship-coordinator",
+    "input": {
+      "counted_working_days": 25,
+      "total_hours": 200,
+      "evaluation_score": 75,
+      "report_word_count": 520,
+      "max_similarity": 0.15,
+      "attachment_count": 3,
+      "evaluation_form_signed": false,
+      "evaluation_form_stamped": false,
+      "application_id": "boundary-unsigned_and_unstamped_combo",
+      "start_date": "2026-07-01",
+      "end_date": "2026-08-30",
+      "company": "Northgate Manufacturing S.A."
+    },
+    "expected_output": {
+      "decision": "needs_review",
+      "explanation": "Needs coordinator review: the employer evaluation form is not signed; the employer evaluation form is not stamped.",
+      "required_fields": [
+        "decision",
+        "explanation"
+      ]
+    },
+    "metadata": {
+      "category": "unsigned_and_unstamped_combo",
+      "source_note": "constructed_boundary_from_policy",
+      "finding_codes": [
+        "EVAL_UNSIGNED",
+        "EVAL_UNSTAMPED"
+      ],
+      "policy_source": "university-rules.json"
+    }
+  }
+]

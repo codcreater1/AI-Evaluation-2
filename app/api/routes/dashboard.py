@@ -5,7 +5,7 @@ import time
 from collections.abc import Callable
 from typing import Any
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -18,6 +18,8 @@ from app.experiments import demo
 from app.experiments.comparison import compare_experiments
 from app.experiments.gates import QualityGates
 from app.experiments.service import get_baseline, get_experiment
+from app.human_eval import demo as human_eval_demo
+from app.human_eval import service as human_eval_service
 from app.integrations.langfuse_client import LangfuseClient, LangfuseError, LangfuseRateLimited
 
 router = APIRouter(include_in_schema=False)
@@ -34,7 +36,13 @@ th,td{border-bottom:1px solid #ddd;padding:6px 8px;vertical-align:top}
 .box{border:1px solid #ddd;border-radius:6px;padding:10px 14px;margin:8px 0;background:#fafafa}
 button{padding:8px 14px;font-size:14px;cursor:pointer;border:1px solid #0b5cd5;background:#0b5cd5;
 color:#fff;border-radius:4px} .muted{color:#777} code{background:#f0f0f0;padding:1px 4px}
+nav.top{margin-bottom:16px;font-size:13px} nav.top a{margin-right:14px}
+input,select,textarea{font:inherit;padding:4px 6px;border:1px solid #ccc;border-radius:3px}
 """
+
+NAV = ("<nav class='top'><a href='/dashboard'>Dashboard</a>"
+      "<a href='/dashboard/human-eval'>Human evaluation</a>"
+      "<a href='/dashboard/agreement'>Judge vs human agreement</a></nav>")
 
 
 def e(x: Any) -> str:
@@ -56,7 +64,7 @@ def when(dt) -> str:
 def page(title: str, body: str) -> HTMLResponse:
     return HTMLResponse(
         f"<!doctype html><html><head><meta charset='utf-8'><title>{e(title)}</title>"
-        f"<style>{CSS}</style></head><body>{body}</body></html>")
+        f"<style>{CSS}</style></head><body>{NAV}{body}</body></html>")
 
 
 def gate_badge(exp: Experiment) -> str:
@@ -300,3 +308,114 @@ model {e(x.meta.get('model'))} &middot; prompt {e(x.meta.get('prompt_version'))}
 {failed or "<tr><td colspan=5 class=muted>No failed cases</td></tr>"}</table>
 <h2>Langfuse check for this experiment</h2>{langfuse_block(client, all_traces[:20])}"""
     return page(x.name, body)
+
+
+# ------------------------------------------------------------------ human evaluation
+def _reason_cell(reason: str, limit: int = 140) -> str:
+    return e(reason if len(reason) <= limit else reason[:limit] + "...")
+
+
+@router.get("/dashboard/human-eval", response_class=HTMLResponse)
+def human_eval_queue_page(run_id: str | None = None, evaluator: str | None = None,
+                          db: Session = Depends(get_db), client: LangfuseClient | None = Depends(get_langfuse)):
+    items = human_eval_service.review_queue(db, run_id=run_id, evaluator=evaluator, limit=200)
+    rows = "".join(f"""
+<tr>
+<td>{e(it.case_id)}</td><td>{e(it.evaluator)}</td><td>{num(it.score, 2)}</td>
+<td>{'yes' if it.passed else 'no' if it.passed is False else '-'}</td>
+<td>{_reason_cell(it.reason)}</td><td>{trace_link(client, it.trace_id)}</td>
+<td><form method='post' action='/dashboard/human-eval/submit' style='display:flex;gap:4px;align-items:center'>
+<input type='hidden' name='run_id' value='{e(it.run_id)}'>
+<input type='hidden' name='case_id' value='{e(it.case_id)}'>
+<input type='hidden' name='evaluator' value='{e(it.evaluator)}'>
+<input type='hidden' name='next' value='/dashboard/human-eval{"?run_id=" + e(run_id) if run_id else ""}'>
+<select name='score' style='width:70px'>
+<option value='1.0'>1.0</option><option value='0.75'>0.75</option><option value='0.5' selected>0.5</option>
+<option value='0.25'>0.25</option><option value='0.0'>0.0</option></select>
+<select name='passed' style='width:80px'><option value='true'>pass</option><option value='false'>fail</option></select>
+<input name='reason' placeholder='reason' style='width:160px'>
+<input name='reviewer' placeholder='you@example.com' style='width:140px' required>
+<button type='submit'>Save</button></form></td>
+</tr>""" for it in items)
+    body = f"""
+<h1>Human evaluation queue</h1>
+<div class='sub'>LLM-judged results waiting for a human verdict on the same case + evaluator.
+Filter with <code>?run_id=...</code> or <code>?evaluator=...</code>.</div>
+<div class='box'>{len(items)} pending item(s){f" for run <code>{e(run_id)}</code>" if run_id else ""}
+{f" &middot; evaluator <code>{e(evaluator)}</code>" if evaluator else ""}</div>
+<table><tr><th>Case</th><th>Evaluator</th><th>Judge score</th><th>Judge passed</th><th>Judge reason</th>
+<th>Trace</th><th>Your review</th></tr>
+{rows or "<tr><td colspan=7 class=muted>Nothing pending. Run an experiment with an LLM-judge evaluator, "
+         "or click \"Run judge-vs-human demo\" on the agreement page.</td></tr>"}</table>"""
+    return page("Human evaluation queue", body)
+
+
+@router.post("/dashboard/human-eval/submit")
+def human_eval_submit(
+    run_id: str = Form(...), case_id: str = Form(...), evaluator: str = Form(...),
+    score: str = Form(""), passed: str = Form(""), reason: str = Form(""),
+    reviewer: str = Form(...), next: str = Form("/dashboard/human-eval"),
+    db: Session = Depends(get_db), client: LangfuseClient | None = Depends(get_langfuse),
+):
+    human_eval_service.submit(
+        db, run_id=run_id, case_id=case_id, evaluator=evaluator,
+        score=float(score) if score else None, passed={"true": True, "false": False}.get(passed),
+        reason=reason, reviewer=reviewer.strip(), client=client,
+    )
+    return RedirectResponse(next or "/dashboard/human-eval", status_code=303)
+
+
+@router.post("/dashboard/human-eval/run-demo")
+def human_eval_run_demo(db: Session = Depends(get_db)):
+    run_id = human_eval_demo.run_demo(db)
+    return RedirectResponse(f"/dashboard/agreement?run_id={run_id}", status_code=303)
+
+
+def _confusion_table(confusion: dict[str, int]) -> str:
+    return f"""
+<table><tr><th></th><th>Human: pass</th><th>Human: fail</th></tr>
+<tr><td><b>Judge: pass</b></td><td class='chip ok'>{confusion['both_pass']}</td>
+<td class='chip bad'>{confusion['human_fail_judge_pass']}</td></tr>
+<tr><td><b>Judge: fail</b></td><td class='chip bad'>{confusion['human_pass_judge_fail']}</td>
+<td class='chip ok'>{confusion['both_fail']}</td></tr></table>"""
+
+
+@router.get("/dashboard/agreement", response_class=HTMLResponse)
+def agreement_page(run_id: str | None = None, evaluator: str | None = None, db: Session = Depends(get_db)):
+    report = human_eval_service.agreement_report(db, run_id=run_id, evaluator=evaluator)
+    runs_with_reviews = sorted({r.run_id for r in db.scalars(
+        select(EvaluationResultRow).where(EvaluationResultRow.evaluator.in_(
+            human_eval_service.LLM_JUDGE_METRICS)))})
+    run_links = "".join(
+        f"<a href='/dashboard/agreement?run_id={e(r)}' style='margin-right:10px'>{e(r[:8])}</a>"
+        for r in runs_with_reviews) or "<span class='muted'>none yet</span>"
+
+    enough = report.n >= 100
+    n_chip = f"<span class='chip {'ok' if enough else 'neutral'}'>{report.n} matched case(s)</span>"
+    disagree_rows = "".join(
+        f"<tr><td>{e(d['case_id'])}</td><td>{num(d['judge_score'], 2)}</td>"
+        f"<td>{num(d['human_score'], 2)}</td><td>{num(d['diff'], 2)}</td></tr>"
+        for d in report.disagreements)
+
+    body = f"""
+<h1>LLM judge vs. human agreement</h1>
+<div class='sub'>Compares each LLM-judge result with a human review of the same case + evaluator.
+Validate on &gt;=100 reviewed cases for a statistically meaningful read.</div>
+<form method='post' action='/dashboard/human-eval/run-demo' onsubmit="this.querySelector('button').disabled=true;
+this.querySelector('button').innerText='Running...'">
+<button type='submit'>Run judge-vs-human demo ({human_eval_demo.N_CASES} cases)</button>
+<span class='muted'> seeds a synthetic run + human reviews so this report has data to show</span></form>
+<h2>Runs with judge results</h2><div class='box'>{run_links}</div>
+<h2>Report{f" for run <code>{e(run_id)}</code>" if run_id else " (all runs)"}</h2>
+<div class='box'>{n_chip}
+&middot; pass agreement: {pct(report.pass_agreement_rate)}
+&middot; Cohen's kappa: {num(report.cohens_kappa)}
+&middot; mean |score diff|: {num(report.mean_abs_score_diff)}
+{'' if enough else "<br><span class='muted'>Fewer than 100 matched cases so far - "
+                    "run the demo above or review more of the queue.</span>"}</div>
+<h2>Confusion (pass/fail)</h2>{_confusion_table(report.confusion)}
+<h2>Biggest disagreements</h2>
+<table><tr><th>Case</th><th>Judge score</th><th>Human score</th><th>|diff|</th></tr>
+{disagree_rows or "<tr><td colspan=4 class=muted>No disagreements (or nothing reviewed yet)</td></tr>"}</table>
+<p><a href='/dashboard/human-eval{f"?run_id={e(run_id)}" if run_id else ""}'>Go to the review queue &rarr;</a></p>"""
+    return page("Judge vs human agreement", body)
