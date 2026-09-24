@@ -144,3 +144,23 @@ class Experiment(Base):
     gate_result: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     langfuse: Mapped[dict] = mapped_column(JSON, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)
+
+
+# ---------------------------------------------------------------- human evaluation
+class HumanEvaluation(Base):
+    """A human reviewer's judgment on one (run, case, evaluator) triple - the same axis an
+    EvaluationResultRow uses, so the two can be joined to measure LLM-judge/human agreement."""
+
+    __tablename__ = "human_evaluations"
+    __table_args__ = (UniqueConstraint("run_id", "case_id", "evaluator", "reviewer",
+                                       name="uq_human_eval_reviewer_target"),)
+    id: Mapped[str] = mapped_column(String(36), primary_key=True)
+    run_id: Mapped[str] = mapped_column(ForeignKey("evaluation_runs.id"), index=True)
+    case_id: Mapped[str] = mapped_column(String(200), index=True)
+    evaluator: Mapped[str] = mapped_column(String(100), index=True)  # metric being judged, e.g. answer_correctness
+    score: Mapped[float | None] = mapped_column(Float, nullable=True)  # 0..1, same scale as EvaluationResult
+    passed: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
+    reason: Mapped[str] = mapped_column(Text, default="")
+    reviewer: Mapped[str] = mapped_column(String(200), default="anonymous")
+    trace_id: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_now)

@@ -180,3 +180,37 @@ Yeni gönderilen verinin Langfuse'ta görünmesi birkaç dakika sürebilir.
 - **Trace gecikmesi:** Langfuse v4'te bu yolla gönderilen trace'ler arayüzde birkaç dakika (en fazla ~15 dk) gecikmeli görünebilir.
 - **Bilinen risk:** Langfuse, eski *trace/observation ingestion API*'sini **16 Kasım 2026'da Cloud'da kapatacak**
   (skor eventleri devam ediyor). Bugün çalışıyor; kalıcı çözüm trace'leri OpenTelemetry (OTLP) endpoint'ine taşımak.
+
+---
+
+# Golden Datasets, Human Evaluation & Judge Agreement
+
+## Golden datasets
+`datasets/ata_rag_golden.json` (104 cases) and `datasets/internship_golden.json` (54 cases) — see
+`datasets/README.md` for methodology and provenance. In short: the ATA RAG set was built by asking
+the live `pomelo-9` assistant real questions (English, Polish, Ukrainian); the Internship Coordinator
+set was built from the live `pomelo-3`/`pomelo-2` system's real (read-only) decisions plus the
+thresholds it publishes at `university-rules.json`. Both were extended with paraphrase / boundary /
+robustness cases and tagged via `metadata.source_note`. Load them into the platform with:
+```bash
+python -m scripts.load_golden_datasets --api http://localhost:8000
+```
+This matches the `ata-rag-golden-v1` / `internship-golden-v1` names that `examples/ata_rag.yaml` and
+`examples/internship.yaml` already expect.
+
+## Human evaluation
+`POST /human-evaluations` records a human verdict (`score`, `passed`, `reason`, `reviewer`) for one
+case + evaluator; it automatically matches the `trace_id` from the matching `EvaluationResultRow` in
+the same run and pushes it to Langfuse as a `human_<evaluator>` score (best-effort, never fails the
+evaluation). `GET /human-evaluations/queue` lists LLM-judge results that don't have a human review
+yet; `GET /human-evaluations/agreement` produces a report over the matched (judge, human) pairs.
+Dashboard: **Human evaluation** (review queue with an inline form) and **Judge vs human agreement**
+pages (`/dashboard/human-eval`, `/dashboard/agreement`).
+
+## LLM judge vs. human agreement
+`app/human_eval/agreement.py`: pass/fail agreement rate, **Cohen's kappa** (chance-corrected), mean
+`|score diff|`, a confusion matrix (both_pass/both_fail/human_pass_judge_fail/human_fail_judge_pass),
+and the biggest disagreements. To validate on >=100 cases without a paid `JUDGE_API_KEY`, the
+dashboard's **"Run judge-vs-human demo"** button (or `POST /dashboard/human-eval/run-demo`) seeds a
+120-case synthetic-but-realistically-noisy judge+human set (`app/human_eval/demo.py`) so the report
+can be exercised end to end.
