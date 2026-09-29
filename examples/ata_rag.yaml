@@ -1,0 +1,21 @@
+system: ata-rag
+dataset: ata-rag-golden-v1
+max_workers: 4
+evaluators:
+  - name: retrieval_recall_at_k
+    params: {k: 5}
+  - name: retrieval_precision_at_k
+    params: {k: 5}
+  - citation_exists
+  - expected_document_present
+  - name: latency_threshold
+    params: {max_ms: 5000}
+  - name: token_threshold
+    params: {max_tokens: 4000}
+  - answer_correctness
+  - groundedness
+  - citation_correctness
+thresholds:
+  answer_correctness: 0.90
+  groundedness: 0.90
+  citation_correctness: 0.90

@@ -1,0 +1,11 @@
+gates:
+  minimum:                      # absolute floor for the candidate's mean score
+    answer_correctness: 0.90
+    groundedness: 0.90
+    citation_correctness: 0.90
+  max_drop:                     # max decrease vs baseline, in score points (0.02 = 2 pts)
+    default: 0.02
+  max_increase_pct:             # lower-is-better metrics, relative increase in %
+    latency_ms: 25
+    cost_usd: 25
+  max_newly_failing_cases: 3    # passed in baseline but fail now
